@@ -1,0 +1,236 @@
+/* Menus flutuantes, modais (filtros, conta, diálogo) e opções. */
+
+.menu {
+  position: fixed;
+  top: calc(var(--altura-barra) + 6px);
+  left: 10px;
+  z-index: 40;
+  display: grid;
+  gap: 2px;
+  min-width: 220px;
+  padding: 6px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-lg);
+  background: var(--painel-solido);
+  box-shadow: var(--sombra);
+  animation: entrar 160ms var(--curva) backwards;
+}
+
+.menu.contexto {
+  top: auto;
+  left: auto;
+  min-width: 200px;
+}
+
+.menu[hidden] {
+  display: none;
+}
+
+.menu button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 32px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--texto);
+  font-size: 13px;
+  text-align: left;
+}
+
+.menu button .icone {
+  color: var(--texto-suave);
+}
+
+.menu button:hover {
+  background: var(--acento-suave);
+}
+
+.menu-sep {
+  height: 1px;
+  margin: 4px 6px;
+  background: var(--borda);
+}
+
+.menu-info {
+  padding: 4px 10px 2px;
+  color: var(--texto-suave);
+  font: 400 11px var(--fonte-mono);
+}
+
+/* ---------------------------- modais ---------------------------- */
+
+.modal-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.38);
+  animation: entrar 160ms var(--curva) backwards;
+}
+
+.modal-fundo[hidden] {
+  display: none;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  width: min(460px, 100%);
+  max-height: 100%;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-xl);
+  background: var(--painel-solido);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+}
+
+.modal-estreito {
+  width: min(360px, 100%);
+  gap: 12px;
+  padding: 20px;
+}
+
+.modal-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 14px 10px 18px;
+}
+
+.modal-topo h2 {
+  font-size: 17px;
+}
+
+.modal-corpo {
+  display: grid;
+  gap: 18px;
+  padding: 4px 18px 16px;
+  overflow: auto;
+}
+
+.modal-pe {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid color-mix(in srgb, var(--borda) 70%, transparent);
+}
+
+.modal-estreito .modal-pe {
+  padding: 0;
+  border-top: 0;
+  margin-top: 4px;
+}
+
+.dialogo-sub {
+  color: var(--texto-suave);
+  font-size: 13px;
+}
+
+#dialogo-campo {
+  width: 100%;
+}
+
+.campo-grupo {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.campo-grupo legend {
+  margin-bottom: 8px;
+  color: var(--texto-suave);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.opcao {
+  position: relative;
+  cursor: pointer;
+}
+
+.opcao input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.opcao span {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+  color: var(--texto-suave);
+  font-size: 13px;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.opcao:hover span {
+  color: var(--texto);
+}
+
+.opcao input:checked + span {
+  border-color: color-mix(in srgb, var(--acento) 55%, transparent);
+  background: var(--acento-suave);
+  color: var(--texto);
+}
+
+.opcao input:focus-visible + span {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
+
+/* --------------------------- conta local --------------------------- */
+
+.conta {
+  display: grid;
+  gap: 12px;
+}
+
+.conta h2 {
+  font-size: 22px;
+}
+
+.conta-nota {
+  color: var(--texto-suave);
+  font-size: 12px;
+}
+
+.campo-rotulado {
+  display: grid;
+  gap: 6px;
+  color: var(--texto-suave);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.campo-rotulado input:not([type="color"]),
+.campo-rotulado select {
+  width: 100%;
+  color: var(--texto);
+  font-size: 13px;
+}
+
+.conta .modal-pe {
+  padding: 4px 0 0;
+  border: 0;
+}

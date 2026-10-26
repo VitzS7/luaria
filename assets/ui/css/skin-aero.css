@@ -1,0 +1,149 @@
+/* Skin Aero: barra azul de vidro, abas arredondadas claras e botões com brilho
+   (azul e verde no Execute). Cantos quase retos e pouco desfoque, como o Windows 7.
+   Só troca a aparência: layout e comportamento são os mesmos. */
+
+body[data-skin="aero"] {
+  --raio: 6px;
+  --desfoque: 0px;
+}
+
+/* Barra de título: gradiente com a faixa de brilho no meio, como o Aero. */
+body[data-skin="aero"] .barra {
+  background: linear-gradient(180deg, #f4f9ff 0%, #cfe3f7 46%, #9fc4ea 52%, #c4dcf4 100%);
+  border-bottom: 1px solid #5b84b4;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+body[data-skin="aero"] .marca-nome {
+  color: #0f3a68;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+body[data-skin="aero"] .marca-versao {
+  color: #3d5e80;
+}
+
+body[data-skin="aero"] .nav {
+  border: 1px solid #5b84b4;
+  border-radius: 6px;
+  background: linear-gradient(#ffffff, #cbdff3);
+  box-shadow: inset 0 1px 0 #ffffff;
+}
+
+body[data-skin="aero"] .nav-item {
+  border-radius: 4px;
+  color: #22466f;
+}
+
+body[data-skin="aero"] .nav-marcador {
+  border-radius: 4px;
+  background: linear-gradient(#ffffff 0%, #d8ebfc 50%, #9ac3ea 51%, #b9daf6 100%);
+  box-shadow: inset 0 0 0 1px #3e77b1;
+}
+
+body[data-skin="aero"] .nav-item.ativo {
+  color: #0b2a4e;
+}
+
+body[data-skin="aero"] .conexao {
+  border-color: #5b84b4;
+  border-radius: 4px;
+  background: linear-gradient(#ffffff, #d4e6f8);
+  color: #1f4166;
+}
+
+body[data-skin="aero"] .btn-janela {
+  border-radius: 4px;
+}
+
+body[data-skin="aero"] .btn-janela.fechar:hover {
+  background: linear-gradient(#f0a58f, #c8432a);
+  color: #fff;
+}
+
+/* Painéis claros e opacos: o vidro some, sobra a cara de janela de Windows. */
+body[data-skin="aero"] .painel,
+body[data-skin="aero"] .area-editor,
+body[data-skin="aero"] .console,
+body[data-skin="aero"] .arquivos,
+body[data-skin="aero"] .cartao,
+body[data-skin="aero"] .grupo,
+body[data-skin="aero"] .ajustes-menu,
+body[data-skin="aero"] .editor-tema {
+  background: #f7fbff;
+  border-color: #8fa9c7;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+body[data-skin="aero"] .console-topo {
+  background: linear-gradient(#ffffff, #dfeaf7);
+}
+
+/* Abas do editor: arredondadas no topo, a ativa com o miolo branco. */
+body[data-skin="aero"] .aba {
+  border-color: #8aa9cc;
+  border-bottom: 0;
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(#f3f8fe, #c4dcf3);
+  color: #22466f;
+}
+
+body[data-skin="aero"] .aba.ativa {
+  border-color: #5f88b8;
+  border-bottom: 0;
+  background: linear-gradient(#ffffff, #eef6ff);
+  color: #0b2a4e;
+}
+
+/* "Files" da árvore: aba de cima do painel direito. */
+body[data-skin="aero"] .arquivos-aba {
+  padding: 4px 14px;
+  border: 1px solid #8aa9cc;
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(#ffffff, #d7e8f8);
+  color: #0b2a4e;
+}
+
+body[data-skin="aero"] .aba-console.ativo {
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(#ffffff, #cfe3f7);
+  box-shadow: inset 0 0 0 1px #8aa9cc;
+}
+
+/* Botões com brilho: o topo claro dá o efeito de vidro, a base escurece um pouco. */
+body[data-skin="aero"] .btn {
+  border-color: #6f93bb;
+  border-radius: 4px;
+  background: linear-gradient(#ffffff 0%, #eaf2fb 48%, #cbdff4 52%, #dde9f7 100%);
+  color: #17365a;
+  box-shadow: inset 0 1px 0 #ffffff;
+}
+
+body[data-skin="aero"] .btn:hover {
+  background: linear-gradient(#ffffff 0%, #d6e8fa 48%, #b7d4f0 52%, #cde2f7 100%);
+}
+
+body[data-skin="aero"] .btn-primario {
+  border-color: #3b7fb8;
+  border-radius: 4px;
+  background: linear-gradient(#e2f2ff 0%, #9fcdf2 48%, #6aaee3 52%, #94c6ee 100%);
+  color: #0a2747;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+body[data-skin="aero"] #btn-executar {
+  border-color: #2e7d1f;
+  border-radius: 4px;
+  background: linear-gradient(#d8f8c4 0%, #7fd15f 48%, #4fae35 52%, #6ac24d 100%);
+  color: #ffffff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+body[data-skin="aero"] .fundo::before {
+  filter: blur(calc(var(--fundo-desfoque)));
+}

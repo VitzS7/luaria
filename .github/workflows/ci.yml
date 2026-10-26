@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  rust-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # the lib depends on the gtk4/webkit6 crate in Cargo.toml, so the build needs the -dev packages even without the UI
+      - name: System dependencies (GTK4 and WebKitGTK 6.0 to build)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-4-dev libwebkitgtk-6.0-dev
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Library tests
+        run: cargo test -p luaria --lib
+      - name: Binary tests
+        run: cargo test -p luaria --bin luaria
+
+  prelude:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # the Luau REPL is built from the same release as the client's VM (367f9d83 = 735).
+      # tools/luau.sh only assembles luau-compile and keeps it in ~/.cache, so here
+      # we build the REPL straight from the tag.
+      - name: Build the Luau REPL
+        run: |
+          git clone https://github.com/luau-lang/luau.git /tmp/luau
+          git -C /tmp/luau checkout -q 367f9d83
+          make -C /tmp/luau config=release luau
+      - name: Prelude harness
+        run: |
+          sed -e '/^--@@PRELUDE@@/r assets/prelude.lua' -e '/^--@@PRELUDE@@/r assets/loadstring.lua' \
+              scripts/teste_prelude.lua > /tmp/p.lua
+          saida=$(/tmp/luau/build/release/luau /tmp/p.lua)
+          echo "$saida"
+          # the harness does not exit with an error: the verdict is the last "OK n/n" line
+          echo "$saida" | tail -1 | awk -F'[ /]' '/^OK/ && $2 == $3 { ok=1 } END { exit !ok }'

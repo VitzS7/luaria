@@ -1,0 +1,21 @@
+target/
+*.so
+*.o
+
+# dependências do bundle da UI (o app.js gerado é versionado)
+assets/ui/node_modules/
+
+# binários soltos, logs, dumps e evidência de RE
+/luaria
+/luaria-cli
+/luaria-gtk
+*.log
+*.dump
+*.bin
+
+# segredos e configuração local
+.env
+.token
+
+# Downloaded on demand by tools/unc.sh (upstream license unconfirmed)
+scripts/unc_check.lua

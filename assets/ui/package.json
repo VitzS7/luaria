@@ -1,0 +1,24 @@
+{
+  "name": "luaria-ui",
+  "private": true,
+  "version": "0.1.0",
+  "description": "UI webview do executor Luaria",
+  "scripts": {
+    "build": "esbuild src/app.js --bundle --minify --format=iife --target=es2020 --outfile=app.js"
+  },
+  "dependencies": {
+    "@codemirror/commands": "^6.8.1",
+    "@codemirror/language": "^6.11.0",
+    "@codemirror/legacy-modes": "^6.5.1",
+    "@codemirror/search": "^6.5.11",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.36.8",
+    "@lezer/highlight": "^1.2.1"
+  },
+  "devDependencies": {
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "esbuild": "^0.25.0"
+  }
+}

@@ -1,0 +1,6 @@
+[workspace]
+resolver = "2"
+members = ["crates/luaria"]
+
+[profile.release]
+debug = 1

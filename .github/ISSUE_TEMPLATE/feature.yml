@@ -1,0 +1,33 @@
+name: Function or improvement
+description: A missing executor API function, or an improvement
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before requesting: see [docs/limitations.md](../../docs/limitations.md). Functions listed as "pending native code" need low-level work; tell us the use case you have in mind. (Português: veja `docs/pt-BR/limitations.md`.)
+  - type: input
+    id: function
+    attributes:
+      label: Function or area
+      placeholder: "e.g. appendfile, debug.getproto"
+    validations:
+      required: true
+  - type: textarea
+    id: use_case
+    attributes:
+      label: What you use it for
+      description: Describe the use case, not the code. Do not paste code from other executors.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you already considered
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmations
+      options:
+        - label: This is not an anti-cheat bypass or a script to attack other players
+          required: true

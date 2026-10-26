@@ -1,0 +1,32 @@
+[package]
+name = "luaria"
+version = "0.1.0"
+edition = "2021"
+description = "Executor de scripts para o cliente Roblox x86_64 rodando no Mocktail (Linux)"
+
+[lib]
+name = "luaria"
+path = "src/lib.rs"
+
+[[bin]]
+name = "luaria-cli"
+path = "src/bin/cli.rs"
+
+# UI webview: motor numa thread própria, HTTP local e WebKitGTK 6.0.
+[[bin]]
+name = "luaria"
+path = "src/bin/ui_web.rs"
+
+# UI GTK4 pura original, mantida como fallback.
+[[bin]]
+name = "luaria-gtk"
+path = "src/bin/ui.rs"
+
+[dependencies]
+iced-x86 = { version = "1.21", default-features = false, features = ["decoder", "std", "instr_info", "nasm", "intel"] }
+memchr = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+gtk4 = { version = "0.9", features = ["v4_10"] }
+gdk4 = "0.9"
+webkit6 = "0.4"

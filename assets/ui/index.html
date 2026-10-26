@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Luaria</title>
+    <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/chrome.css" />
+    <link rel="stylesheet" href="/css/home.css" />
+    <link rel="stylesheet" href="/css/editor.css" />
+    <link rel="stylesheet" href="/css/scripts.css" />
+    <link rel="stylesheet" href="/css/settings.css" />
+    <link rel="stylesheet" href="/css/modais.css" />
+    <link rel="stylesheet" href="/css/skin-aero.css" />
+  </head>
+  <body data-skin="vidro" data-nav="centro">
+    <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4.5 7.5h15M4.5 12h15M4.5 16.5h15" /></symbol>
+      <symbol id="i-casa" viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5V20h-5.5v-5.5h-5V20H4z" /></symbol>
+      <symbol id="i-code" viewBox="0 0 24 24"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5" /></symbol>
+      <symbol id="i-camadas" viewBox="0 0 24 24"><path d="M12 4l8.5 4.5L12 13 3.5 8.5zM3.5 12.5L12 17l8.5-4.5M3.5 16.5L12 21l8.5-4.5" /></symbol>
+      <symbol id="i-engrenagem" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" /><path d="M12 3.5v2.2M12 18.3v2.2M4.6 7.8l1.9 1.1M17.5 15.1l1.9 1.1M4.6 16.2l1.9-1.1M17.5 8.9l1.9-1.1" /></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M8.4 5.2v13.6L19 12z" fill="currentColor" /></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13" /></symbol>
+      <symbol id="i-busca" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" /><path d="M16 16l4.5 4.5" /></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" /></symbol>
+      <symbol id="i-lixo" viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V4.8h5V7M6.5 7l1 13h9l1-13M10 11v5.5M14 11v5.5" /></symbol>
+      <symbol id="i-lapis" viewBox="0 0 24 24"><path d="M4 20l4.2-1L19 8.2 15.8 5 5 15.8zM14.2 6.6l3.2 3.2" /></symbol>
+      <symbol id="i-arquivo" viewBox="0 0 24 24"><path d="M7 3.5h6.5L18 8v12.5H7zM13 3.5V8h5" /></symbol>
+      <symbol id="i-pasta" viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 012-2h4l2 2.2h7a2 2 0 012 2V17.5a2 2 0 01-2 2h-13a2 2 0 01-2-2z" /></symbol>
+      <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.5" /><path d="M7.5 10l2 2-2 2M12.5 14h4" /></symbol>
+      <symbol id="i-onda" viewBox="0 0 24 24"><path d="M3 15l4-6 3.5 4 3-7 3.5 9H21" /></symbol>
+      <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3.5V9M15 3.5V9M7 9h10v2.5a5 5 0 01-10 0zM12 16.5V21" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></symbol>
+      <symbol id="i-alerta" viewBox="0 0 24 24"><path d="M12 4l8.5 15h-17zM12 9.5v4.5M12 16.8v.2" /></symbol>
+      <symbol id="i-seta" viewBox="0 0 24 24"><path d="M5 12h13M13 7l5 5-5 5" /></symbol>
+      <symbol id="i-recarregar" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 11-2.2-5.3M19.5 4.5V9H15" /></symbol>
+      <symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" /><path d="M12 7.5V12l3 2" /></symbol>
+      <symbol id="i-atualizar" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 0113-5M19.5 12a7.5 7.5 0 01-13 5M17.5 3.5v3.5H14M6.5 20.5V17H10" /></symbol>
+      <symbol id="i-filtro" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4" /></symbol>
+      <symbol id="i-fixar" viewBox="0 0 24 24"><path d="M9 4h6l-1 5 3 3v1.5H7V12l3-3zM12 13.5V20" /></symbol>
+      <symbol id="i-cadeado" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="9.5" rx="2" /><path d="M8 10.5V8a4 4 0 018 0v2.5" /></symbol>
+      <symbol id="i-copiar" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2" /><path d="M5.5 15V6a1.5 1.5 0 011.5-1.5h9" /></symbol>
+      <symbol id="i-salvar" viewBox="0 0 24 24"><path d="M5 4.5h11l3 3V19.5H5zM8 4.5v5h7v-5M8 19.5v-5h8v5" /></symbol>
+      <symbol id="i-disquete" viewBox="0 0 24 24"><path d="M5 4.5h11l3 3V19.5H5zM8.5 4.5v4.5h6V4.5M8.5 19.5v-5.5h7v5.5" /></symbol>
+      <symbol id="i-usuario" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8" /><path d="M4.5 20a7.5 7.5 0 0115 0" /></symbol>
+      <symbol id="i-imagem" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2" /><circle cx="9" cy="10" r="1.6" /><path d="M4 17.5l5-4.5 3.5 3 2.5-2 5 4" /></symbol>
+      <symbol id="i-pincel" viewBox="0 0 24 24"><path d="M14.5 4.5l5 5L11 18l-5.5 1 1-5.5zM4 20.5h6" /></symbol>
+      <symbol id="i-teclado" viewBox="0 0 24 24"><rect x="3" y="6.5" width="18" height="11" rx="2" /><path d="M7 10.5h.01M11 10.5h.01M15 10.5h.01M7.5 14.5h9" /></symbol>
+      <symbol id="i-plugue" viewBox="0 0 24 24"><path d="M9 3.5V9M15 3.5V9M7 9h10v2.5a5 5 0 01-10 0zM12 16.5V21" /></symbol>
+      <symbol id="i-minimizar" viewBox="0 0 24 24"><path d="M5 12.5h14" /></symbol>
+      <symbol id="i-maximizar" viewBox="0 0 24 24"><rect x="5.5" y="5.5" width="13" height="13" rx="1.5" /></symbol>
+      <symbol id="i-janelas" viewBox="0 0 24 24"><rect x="4.5" y="8.5" width="11" height="11" rx="1.5" /><path d="M8.5 8.5V5.5h11v11h-3" /></symbol>
+      <symbol id="i-mais-acoes" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.3" /><circle cx="12" cy="12" r="1.3" /><circle cx="18" cy="12" r="1.3" /></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" /></symbol>
+      <symbol id="i-ocultar" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5" /></symbol>
+    </svg>
+
+    <div class="fundo" id="fundo" aria-hidden="true"></div>
+
+    <div class="janela" id="janela">
+      <!-- Sem decoração do GTK: as alças de borda pedem o redimensionamento nativo. -->
+      <div class="alca" data-borda="n" aria-hidden="true"></div>
+      <div class="alca" data-borda="s" aria-hidden="true"></div>
+      <div class="alca" data-borda="l" aria-hidden="true"></div>
+      <div class="alca" data-borda="o" aria-hidden="true"></div>
+      <div class="alca canto" data-borda="no" aria-hidden="true"></div>
+      <div class="alca canto" data-borda="ne" aria-hidden="true"></div>
+      <div class="alca canto" data-borda="so" aria-hidden="true"></div>
+      <div class="alca canto" data-borda="se" aria-hidden="true"></div>
+      <header class="barra" id="barra">
+        <div class="barra-esq">
+          <button class="btn-icone" id="btn-menu" aria-haspopup="menu" aria-expanded="false" aria-label="Menu" title="Menu">
+            <svg class="icone"><use href="#i-menu" /></svg>
+          </button>
+          <div class="marca">
+            <span class="marca-nome">Luaria</span>
+            <span class="marca-versao" id="versao"></span>
+          </div>
+        </div>
+
+        <nav class="nav" id="nav" aria-label="Sections">
+          <span class="nav-marcador" id="nav-marcador" aria-hidden="true"></span>
+          <button class="nav-item ativo" data-ir="home"><svg class="icone"><use href="#i-casa" /></svg><span class="txt">Home</span></button>
+          <button class="nav-item" data-ir="editor"><svg class="icone"><use href="#i-code" /></svg><span class="txt">Editor</span></button>
+          <button class="nav-item" data-ir="scripts"><svg class="icone"><use href="#i-camadas" /></svg><span class="txt">Scripts</span></button>
+          <button class="nav-item" data-ir="settings"><svg class="icone"><use href="#i-engrenagem" /></svg><span class="txt">Settings</span></button>
+        </nav>
+
+        <div class="barra-dir">
+          <button class="conexao" id="conexao" title="Client status">
+            <span class="conexao-ponto" aria-hidden="true"></span>
+            <span class="conexao-texto" id="conexao-texto">disconnected</span>
+          </button>
+          <div class="janela-botoes">
+            <button class="btn-janela" data-janela="minimizar" aria-label="Minimize" title="Minimize">
+              <svg class="icone"><use href="#i-minimizar" /></svg>
+            </button>
+            <button class="btn-janela" data-janela="maximizar" aria-label="Maximize" title="Maximize">
+              <svg class="icone"><use href="#i-maximizar" /></svg>
+            </button>
+            <button class="btn-janela fechar" data-janela="fechar" aria-label="Close" title="Close">
+              <svg class="icone"><use href="#i-x" /></svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="barra-progresso" id="barra-progresso" aria-hidden="true"><span></span></div>
+
+      <main class="palco">
+        <!-- ============================== HOME ============================== -->
+        <section class="vista" data-vista="home" aria-label="Home">
+          <div class="home">
+            <section class="painel atividade">
+              <header class="painel-topo">
+                <h2><svg class="icone"><use href="#i-atualizar" /></svg>Execution activity</h2>
+                <div class="segmentado" role="group" aria-label="Period" id="atividade-modo">
+                  <button data-modo="diario" class="ativo">Daily</button>
+                  <button data-modo="semanal">Weekly</button>
+                  <button data-modo="acumulado">Cumulative</button>
+                </div>
+              </header>
+              <div class="atividade-corpo" id="atividade-corpo"></div>
+              <footer class="atividade-resumo" id="atividade-resumo"></footer>
+            </section>
+
+            <section class="painel recentes">
+              <header class="painel-topo">
+                <h2><svg class="icone"><use href="#i-relogio" /></svg>Recent Scripts</h2>
+              </header>
+              <ul class="lista-recentes" id="recentes"></ul>
+            </section>
+
+            <section class="painel changelog">
+              <header class="painel-topo">
+                <h2><svg class="icone"><use href="#i-recarregar" /></svg>Changelog</h2>
+              </header>
+              <div class="changelog-corpo" id="changelog"></div>
+            </section>
+          </div>
+        </section>
+
+        <!-- ============================= EDITOR ============================= -->
+        <section class="vista" data-vista="editor" aria-label="Editor">
+          <div class="editor-vista">
+            <div class="editor-principal">
+              <div class="abas-barra">
+                <div class="abas" id="abas" role="tablist"></div>
+                <button class="btn-icone" id="btn-novo" title="New script (Ctrl+N)" aria-label="New script">
+                  <svg class="icone"><use href="#i-plus" /></svg>
+                </button>
+              </div>
+
+              <div class="area-editor" id="area-editor">
+                <div class="editor" id="editor"></div>
+                <div class="editor-vazio" id="editor-vazio">
+                  <svg class="icone-grande"><use href="#i-terminal" /></svg>
+                  <h2>No script open</h2>
+                  <p>Pick a file from the side panel or create a new one.</p>
+                  <button class="btn btn-primario" id="btn-novo-vazio">
+                    <svg class="icone"><use href="#i-plus" /></svg>Novo script
+                  </button>
+                </div>
+              </div>
+
+              <section class="console" id="console">
+                <header class="console-topo">
+                  <div class="console-abas" role="tablist">
+                    <button class="aba-console ativo" id="btn-painel-output" role="tab">
+                      <svg class="icone"><use href="#i-terminal" /></svg>Output
+                    </button>
+                    <button class="aba-console" id="btn-painel-problemas" role="tab">
+                      <svg class="icone"><use href="#i-alerta" /></svg>Problems
+                      <span class="badge" id="contador-problemas">0</span>
+                    </button>
+                  </div>
+                  <div class="console-acoes">
+                    <button class="chip ativo" id="btn-filtro" title="Hide client noise">noise</button>
+                    <button class="chip ativo" id="btn-autoscroll" title="Follow output">auto</button>
+                    <button class="btn-icone" id="btn-limpar" title="Clear output" aria-label="Clear output">
+                      <svg class="icone"><use href="#i-lixo" /></svg>
+                    </button>
+                  </div>
+                </header>
+                <div class="console-corpo" id="console-linhas"></div>
+                <div class="console-vazio" id="console-vazio">
+                  <span class="mono">»</span> script output appears here
+                </div>
+                <div class="problemas" id="problemas" hidden>
+                  <div class="problemas-lista" id="lista-problemas"></div>
+                  <div class="problemas-vazio" id="problemas-vazio">
+                    <svg class="icone"><use href="#i-check" /></svg>no problems in this run
+                  </div>
+                </div>
+              </section>
+
+              <div class="editor-acoes">
+                <button class="btn btn-primario" id="btn-executar" title="Run (Ctrl+Enter)">
+                  <svg class="icone"><use href="#i-play" /></svg>Execute
+                </button>
+                <button class="btn" id="btn-limpar-editor">
+                  <svg class="icone"><use href="#i-lixo" /></svg>Clear
+                </button>
+                <button class="btn" id="btn-abrir">
+                  <svg class="icone"><use href="#i-pasta" /></svg>Open
+                </button>
+                <button class="btn" id="btn-salvar" title="Save (Ctrl+S)">
+                  <svg class="icone"><use href="#i-disquete" /></svg>Save
+                </button>
+              </div>
+            </div>
+
+            <aside class="arquivos" aria-label="Files">
+              <div class="arquivos-topo">
+                <span class="arquivos-aba"><svg class="icone"><use href="#i-pasta" /></svg>Files</span>
+              </div>
+              <label class="campo-busca">
+                <svg class="icone"><use href="#i-busca" /></svg>
+                <input id="busca-arquivos" type="search" placeholder="Search scripts" spellcheck="false" autocomplete="off" />
+              </label>
+              <div class="arvore" id="arvore" role="tree" aria-label="Disk files">
+                <ul id="lista-arquivos" role="group"></ul>
+                <div class="arvore-estado" id="arvore-estado" hidden>
+                  <p id="arvore-estado-texto"></p>
+                  <button class="btn" id="btn-tentar-arvore" hidden>Try again</button>
+                </div>
+                <div class="arvore-vazio" id="arvore-vazio" hidden>no scripts yet</div>
+              </div>
+              <footer class="arquivos-pe">
+                <div id="pop-clientes" class="pop-clientes" role="dialog" aria-label="Roblox clients" hidden>
+                  <div class="rotulo pop-topo">Roblox clients</div>
+                  <div id="clientes-corpo"></div>
+                </div>
+                <button class="btn btn-fantasma" id="btn-clientes" aria-haspopup="dialog" aria-expanded="false">
+                  <svg class="icone"><use href="#i-plugue" /></svg>Clients
+                </button>
+              </footer>
+            </aside>
+          </div>
+        </section>
+
+        <!-- ============================ SCRIPTS ============================= -->
+        <section class="vista" data-vista="scripts" aria-label="Scripts">
+          <header class="vista-topo">
+            <div class="vista-titulo">
+              <h1>Scripts</h1>
+              <div class="segmentado" id="scripts-visao" role="group" aria-label="Script source">
+                <button class="ativo" data-visao="meus">My scripts <span class="contagem" id="contagem-scripts">0</span></button>
+                <button data-visao="hub">Hub</button>
+              </div>
+            </div>
+            <div class="vista-acoes" id="acoes-meus">
+              <label class="campo-busca largo">
+                <svg class="icone"><use href="#i-busca" /></svg>
+                <input id="busca-scripts" type="search" placeholder="Search by name or content" spellcheck="false" autocomplete="off" />
+              </label>
+              <button class="btn" id="btn-filtros">
+                <svg class="icone"><use href="#i-filtro" /></svg>Filters<span class="badge" id="badge-filtros" hidden></span>
+              </button>
+              <button class="btn btn-primario" id="btn-criar">
+                <svg class="icone"><use href="#i-plus" /></svg>Novo script
+              </button>
+            </div>
+            <div class="vista-acoes" id="acoes-hub" hidden>
+              <label class="campo-busca largo">
+                <svg class="icone"><use href="#i-busca" /></svg>
+                <input id="hub-busca" type="search" placeholder="Search the Hub" spellcheck="false" autocomplete="off" />
+              </label>
+              <select id="hub-ordem" aria-label="Sort"></select>
+              <select id="hub-acesso" aria-label="Access"></select>
+              <label class="opcao"><input type="checkbox" id="hub-verificado" /><span>Verified</span></label>
+            </div>
+          </header>
+          <div id="meus-corpo">
+            <div class="grade-scripts" id="grade-scripts"></div>
+            <div class="estado-vazio" id="scripts-vazio" hidden>
+              <svg class="icone-grande"><use href="#i-arquivo" /></svg>
+              <h2>No scripts yet</h2>
+              <p>Create the first file; it lives in <code>scripts/</code>.</p>
+            </div>
+            <div class="estado-vazio" id="scripts-sem-resultado" hidden>
+              <svg class="icone-grande"><use href="#i-busca" /></svg>
+              <h2>Nothing found</h2>
+              <p>No script matches the search or the filters.</p>
+            </div>
+          </div>
+          <div id="hub-corpo" hidden>
+            <div class="grade-scripts" id="hub-grade" aria-live="polite"></div>
+            <div class="estado-vazio" id="hub-vazio" hidden>
+              <svg class="icone-grande"><use href="#i-busca" /></svg>
+              <h2>No scripts found</h2>
+              <p>Try another term or clear the filters.</p>
+            </div>
+            <div class="estado-vazio" id="hub-erro" hidden>
+              <svg class="icone-grande"><use href="#i-alerta" /></svg>
+              <h2 id="hub-erro-titulo">Could not load the Hub</h2>
+              <p id="hub-erro-msg"></p>
+              <button class="btn btn-primario" id="hub-tentar">Try again</button>
+            </div>
+            <div class="hub-mais" id="hub-mais" hidden>
+              <button class="btn" id="hub-carregar-mais">Load more</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================ SETTINGS ============================ -->
+        <section class="vista" data-vista="settings" aria-label="Settings">
+          <div class="ajustes">
+            <nav class="ajustes-menu" aria-label="Settings sections">
+              <button class="ajustes-item ativo" data-secao="interface"><svg class="icone"><use href="#i-janelas" /></svg>Interface</button>
+              <button class="ajustes-item" data-secao="editor"><svg class="icone"><use href="#i-code" /></svg>Editor</button>
+              <button class="ajustes-item" data-secao="cliente"><svg class="icone"><use href="#i-plugue" /></svg>Client</button>
+              <button class="ajustes-item" data-secao="atalhos"><svg class="icone"><use href="#i-teclado" /></svg>Shortcuts</button>
+              <button class="ajustes-item" data-secao="temas"><svg class="icone"><use href="#i-pincel" /></svg>Themes</button>
+              <span class="ajustes-estado" id="ajustes-estado" aria-live="polite">saved</span>
+            </nav>
+
+            <div class="ajustes-corpo">
+              <section class="secao" data-secao="interface">
+                <header class="secao-topo"><span class="rotulo">background</span><h2>Window</h2></header>
+                <div class="grupo">
+                  <div class="linha">
+                    <div class="linha-texto">
+                      <label for="fundo-url">Background image</label>
+                      <p>http(s) URL or upload a file. Empty uses the theme background.</p>
+                    </div>
+                    <div class="linha-controle linha-campo">
+                      <input id="fundo-url" type="url" placeholder="https://…" spellcheck="false" autocomplete="off" />
+                      <button class="btn" id="btn-fundo-enviar">Upload</button>
+                      <button class="btn btn-fantasma" id="btn-fundo-remover">Remove</button>
+                      <input id="fundo-arquivo" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden />
+                    </div>
+                  </div>
+                  <div class="linha">
+                    <div class="linha-texto"><label for="fundo-desfoque">Background blur</label><p>Higher means a softer image.</p></div>
+                    <div class="linha-controle faixa"><input type="range" id="fundo-desfoque" min="0" max="40" step="1" /><output class="valor mono" id="fundo-desfoque-valor"></output></div>
+                  </div>
+                  <div class="linha">
+                    <div class="linha-texto"><label for="fundo-forca">Background strength</label><p>How much of the image shows behind the interface.</p></div>
+                    <div class="linha-controle faixa"><input type="range" id="fundo-forca" min="0" max="100" step="1" /><output class="valor mono" id="fundo-forca-valor"></output></div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="secao" data-secao="interface">
+                <header class="secao-topo"><span class="rotulo">panels</span><h2>Surfaces</h2></header>
+                <div class="grupo">
+                  <div class="linha">
+                    <div class="linha-texto"><label for="painel-opacidade">Panel opacity</label><p>Lower lets the background show through.</p></div>
+                    <div class="linha-controle faixa"><input type="range" id="painel-opacidade" min="35" max="100" step="1" /><output class="valor mono" id="painel-opacidade-valor"></output></div>
+                  </div>
+                  <div class="linha">
+                    <div class="linha-texto"><label for="painel-desfoque">Panel blur</label><p>Frosted glass behind cards and the editor.</p></div>
+                    <div class="linha-controle faixa"><input type="range" id="painel-desfoque" min="0" max="40" step="1" /><output class="valor mono" id="painel-desfoque-valor"></output></div>
+                  </div>
+                  <div class="linha">
+                    <div class="linha-texto"><label for="painel-raio">Corner radius</label><p>Rounding of cards and buttons.</p></div>
+                    <div class="linha-controle faixa"><input type="range" id="painel-raio" min="0" max="24" step="1" /><output class="valor mono" id="painel-raio-valor"></output></div>
+                  </div>
+                  <div class="linha">
+                    <div class="linha-texto"><label for="janela-opacidade">Window opacity</label><p>Transparency of the whole window in the desktop environment.</p></div>
+                    <div class="linha-controle faixa"><input type="range" id="janela-opacidade" min="20" max="100" step="1" /><output class="valor mono" id="janela-opacidade-valor"></output></div>
+                  </div>
+                  <div class="linha">
+                    <div class="linha-texto"><label for="efeitos-visuais">Visual effects</label><p>Transitions, animations and shadows. Turn off if the window is slow.</p></div>
+                    <div class="linha-controle"><input type="checkbox" id="efeitos-visuais" /></div>
+                  </div>
+                  <div class="linha">
+                    <div class="linha-texto"><span class="rotulo-campo">Density</span><p>Height of list rows and the screen.</p></div>
+                    <div class="linha-controle segmentado" id="densidade" role="group" aria-label="Density">
+                      <button data-densidade="comfortable" class="ativo">Comfortable</button>
+                      <button data-densidade="compact">Compact</button>
+                    </div>
+                  </div>
+                  <div class="linha">
+                    <div class="linha-texto"><span class="rotulo-campo">Navigation layout</span><p>Centered, or right after the menu.</p></div>
+                    <div class="linha-controle segmentado" id="nav-layout" role="group" aria-label="Navigation layout">
+                      <button data-nav="centro" class="ativo">Center</button>
+                      <button data-nav="esquerda">Left</button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="secao" data-secao="interface">
+                <header class="secao-topo"><span class="rotulo">confirmations</span><h2>Ask before</h2></header>
+                <div class="grupo">
+                  <div class="linha">
+                    <div class="linha-texto"><label for="confirmar-fechar">Close tab with unsaved changes</label><p>When off, the tab closes and unsaved text is lost.</p></div>
+                    <div class="linha-controle"><input type="checkbox" id="confirmar-fechar" /></div>
+                  </div>
+                  <div class="linha">
+                    <div class="linha-texto"><label for="confirmar-excluir">Delete script</label><p>Asks for confirmation before deleting the file from disk.</p></div>
+                    <div class="linha-controle"><input type="checkbox" id="confirmar-excluir" /></div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="secao" data-secao="editor">
+                <header class="secao-topo"><span class="rotulo">text</span><h2>Editor</h2></header>
+                <div class="grupo">
+                  <div class="linha">
+                    <div class="linha-texto"><label for="fonte">Font</label><p>Monospace, used in the editor and console.</p></div>
+                    <div class="linha-controle"><select id="fonte">
+                      <option value="Fira Code">Fira Code</option>
+                      <option value="IBM Plex Mono">IBM Plex Mono</option>
+                      <option value="Noto Sans Mono">Noto Sans Mono</option>
+                      <option value="Liberation Mono">Liberation Mono</option>
+                      <option value="DejaVu Sans Mono">DejaVu Sans Mono</option>
+                    </select></div>
+                  </div>
+                  <div class="linha">
+                    <div class="linha-texto"><label for="fonte-tamanho">Size</label><p>Between 10 and 22 px.</p></div>
+                    <div class="linha-controle faixa"><input type="range" id="fonte-tamanho" min="10" max="22" step="1" /><output class="valor mono" id="fonte-tamanho-valor"></output></div>
+                  </div>
+                </div>
+                <div class="previa" id="previa">
+                  <pre><span class="s-palavra">local</span> <span class="s-funcao">contar</span> = <span class="s-palavra">function</span>(lista)
+  <span class="s-palavra">for</span> i, item <span class="s-palavra">in</span> <span class="s-builtin">ipairs</span>(lista) <span class="s-palavra">do</span>
+    <span class="s-builtin">print</span>(<span class="s-texto">"item "</span> .. i, item)
+  <span class="s-palavra">end</span>
+<span class="s-palavra">end</span></pre>
+                </div>
+              </section>
+
+              <section class="secao" data-secao="cliente">
+                <header class="secao-topo"><span class="rotulo">game</span><h2>Roblox client</h2></header>
+                <div class="grupo">
+                  <div class="linha">
+                    <div class="linha-texto"><span class="rotulo-campo">Status</span><p id="cliente-texto">waiting for client</p></div>
+                    <div class="linha-controle"><button class="btn btn-primario" id="btn-anexar"><svg class="icone"><use href="#i-plug" /></svg><span id="btn-anexar-texto">Attach client</span></button></div>
+                  </div>
+                  <dl class="diagnostico">
+                    <div><dt>pid</dt><dd class="mono" id="diag-pid">—</dd></div>
+                    <div><dt>luau_load</dt><dd class="mono" id="diag-load">—</dd></div>
+                    <div><dt>luaD_call</dt><dd class="mono" id="diag-calld">—</dd></div>
+                    <div><dt>prelude</dt><dd class="mono" id="diag-prelude">—</dd></div>
+                  </dl>
+                </div>
+              </section>
+
+              <section class="secao" data-secao="atalhos">
+                <header class="secao-topo"><span class="rotulo">keyboard</span><h2>Shortcuts</h2></header>
+                <dl class="grupo atalhos">
+                  <div class="linha"><dt>Run script</dt><dd><kbd>Ctrl</kbd><kbd>Enter</kbd></dd></div>
+                  <div class="linha"><dt>Save</dt><dd><kbd>Ctrl</kbd><kbd>S</kbd></dd></div>
+                  <div class="linha"><dt>New script</dt><dd><kbd>Ctrl</kbd><kbd>N</kbd></dd></div>
+                  <div class="linha"><dt>New tab</dt><dd><kbd>Ctrl</kbd><kbd>T</kbd></dd></div>
+                  <div class="linha"><dt>Close tab</dt><dd><kbd>Ctrl</kbd><kbd>W</kbd></dd></div>
+                  <div class="linha"><dt>Go to tab N</dt><dd><kbd>Ctrl</kbd><kbd>1</kbd>…<kbd>9</kbd></dd></div>
+                  <div class="linha"><dt>Next tab</dt><dd><kbd>Ctrl</kbd><kbd>Tab</kbd></dd></div>
+                  <div class="linha"><dt>Previous tab</dt><dd><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Tab</kbd></dd></div>
+                  <div class="linha"><dt>Find in script</dt><dd><kbd>Ctrl</kbd><kbd>F</kbd></dd></div>
+                </dl>
+              </section>
+
+              <section class="secao" data-secao="temas">
+                <header class="secao-topo"><span class="rotulo">appearance</span><h2>Temas</h2></header>
+                <div class="presets" id="presets" role="group" aria-label="Preset themes"></div>
+
+                <div class="editor-tema">
+                  <div class="editor-tema-campos">
+                    <label class="campo-rotulado">Nome do tema
+                      <input id="tema-nome" maxlength="40" spellcheck="false" autocomplete="off" placeholder="My theme" />
+                    </label>
+                    <label class="campo-rotulado">Modo
+                      <select id="tema-modo">
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                        <option value="amoled">AMOLED (pure black)</option>
+                      </select>
+                    </label>
+                    <label class="campo-rotulado">Cor de destaque
+                      <span class="cor-linha">
+                        <input type="color" id="tema-acento" aria-label="Accent color" />
+                        <input class="hex mono" id="tema-acento-hex" maxlength="7" spellcheck="false" aria-label="Accent color in hex" />
+                      </span>
+                    </label>
+                  </div>
+                  <div class="tokens" id="tokens"></div>
+                  <div class="editor-tema-acoes">
+                    <button class="btn btn-primario" id="btn-salvar-tema"><svg class="icone"><use href="#i-check" /></svg>Save as theme</button>
+                  </div>
+                  <div class="compartilhar">
+                    <span class="rotulo-campo">Share theme</span>
+                    <textarea id="tema-codigo" rows="3" spellcheck="false" aria-label="Theme code" placeholder="Export to generate a code, or paste a code to import."></textarea>
+                    <div class="editor-tema-acoes">
+                      <button class="btn" id="btn-exportar-tema">Export code</button>
+                      <button class="btn" id="btn-importar-tema">Import code</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="temas-salvos" id="temas-salvos"></div>
+              </section>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <div class="menu" id="menu" role="menu" hidden>
+        <button role="menuitem" data-acao="novo"><svg class="icone"><use href="#i-plus" /></svg>New script</button>
+        <button role="menuitem" data-acao="anexar"><svg class="icone"><use href="#i-plugue" /></svg>Attach client</button>
+        <button role="menuitem" data-acao="ajustes"><svg class="icone"><use href="#i-engrenagem" /></svg>Settings</button>
+        <button role="menuitem" data-acao="conta"><svg class="icone"><use href="#i-usuario" /></svg>Local account</button>
+        <div class="menu-sep" role="separator"></div>
+        <p class="menu-info" id="menu-info">Luaria</p>
+      </div>
+
+      <div class="menu contexto" id="menu-aba" role="menu" hidden>
+        <button role="menuitem" data-acao="fixar"><svg class="icone"><use href="#i-fixar" /></svg>Pin</button>
+        <button role="menuitem" data-acao="leitura"><svg class="icone"><use href="#i-cadeado" /></svg>Read-only</button>
+        <button role="menuitem" data-acao="cor"><svg class="icone"><use href="#i-pincel" /></svg>Change color</button>
+        <div class="menu-sep" role="separator"></div>
+        <button role="menuitem" data-acao="renomear"><svg class="icone"><use href="#i-lapis" /></svg>Rename</button>
+        <button role="menuitem" data-acao="duplicar"><svg class="icone"><use href="#i-copiar" /></svg>Duplicate</button>
+        <button role="menuitem" data-acao="salvar-como"><svg class="icone"><use href="#i-salvar" /></svg>Save as</button>
+        <div class="menu-sep" role="separator"></div>
+        <button role="menuitem" data-acao="fechar"><svg class="icone"><use href="#i-x" /></svg>Close</button>
+      </div>
+
+      <div class="toasts" id="toasts" aria-live="polite"></div>
+
+      <div class="modal-fundo" id="modal-filtros" hidden>
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="filtros-titulo">
+          <header class="modal-topo">
+            <h2 id="filtros-titulo">Filters</h2>
+            <button class="btn-icone" data-fechar aria-label="Close"><svg class="icone"><use href="#i-x" /></svg></button>
+          </header>
+          <div class="modal-corpo">
+            <fieldset class="campo-grupo">
+              <legend>Sort by</legend>
+              <div class="opcoes" id="filtro-ordem" role="radiogroup"></div>
+            </fieldset>
+            <fieldset class="campo-grupo">
+              <legend>Show</legend>
+              <div class="opcoes" id="filtro-mostrar" role="radiogroup"></div>
+            </fieldset>
+          </div>
+          <footer class="modal-pe">
+            <button class="btn btn-fantasma" id="filtros-limpar">Clear</button>
+            <button class="btn btn-primario" data-fechar>Done</button>
+          </footer>
+        </div>
+      </div>
+
+      <div class="modal-fundo" id="modal-conta" hidden>
+        <div class="modal modal-estreito" role="dialog" aria-modal="true" aria-labelledby="conta-titulo">
+          <form class="conta" id="conta-form" autocomplete="off">
+            <span class="rotulo">Luaria · local</span>
+            <h2 id="conta-titulo">Sign in</h2>
+            <label class="campo-rotulado">Display name
+              <input id="conta-nome" maxlength="32" spellcheck="false" placeholder="your name" />
+            </label>
+            <p class="conta-nota">There is no account server: the name only identifies this install.</p>
+            <div class="modal-pe">
+              <button class="btn btn-fantasma" type="button" id="conta-sair">Sign out</button>
+              <button class="btn btn-primario" type="submit">Sign in</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal-fundo" id="modal-hub" hidden>
+        <div class="modal modal-largo" role="dialog" aria-modal="true" aria-labelledby="hub-det-titulo">
+          <header class="modal-topo">
+            <h2 id="hub-det-titulo"></h2>
+            <button class="btn-icone" data-fechar aria-label="Close"><svg class="icone"><use href="#i-x" /></svg></button>
+          </header>
+          <div class="modal-corpo" id="hub-det-corpo"></div>
+          <footer class="modal-pe">
+            <select id="hub-det-variante" aria-label="Script version" hidden></select>
+            <button class="btn btn-fantasma" id="hub-det-copiar"><svg class="icone"><use href="#i-copiar" /></svg>Copy script</button>
+            <button class="btn" id="hub-det-editor"><svg class="icone"><use href="#i-code" /></svg>Open in editor</button>
+            <button class="btn btn-primario" id="hub-det-executar"><svg class="icone"><use href="#i-play" /></svg><span>Run</span></button>
+          </footer>
+        </div>
+      </div>
+
+      <div class="modal-fundo" id="modal-abrir" hidden>
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="abrir-titulo">
+          <header class="modal-topo"><h2 id="abrir-titulo">Open script</h2></header>
+          <div class="modal-corpo">
+            <label class="campo-rotulo">Path
+              <input id="abrir-caminho" spellcheck="false" autocomplete="off" placeholder="Scripts/sub/x.lua" />
+            </label>
+            <div class="abrir-raizes">
+              <button class="chip" data-raiz="Scripts">Scripts</button>
+              <button class="chip" data-raiz="Workspace">Workspace</button>
+              <button class="chip" data-raiz="AutoExec">AutoExec</button>
+            </div>
+          </div>
+          <footer class="modal-pe">
+            <input type="file" id="abrir-arquivo" accept=".lua,.luau" hidden />
+            <button class="btn importar" id="abrir-importar">Import file</button>
+            <button class="btn btn-fantasma" data-fechar>Cancel</button>
+            <button class="btn" id="abrir-pasta">Open folder</button>
+            <button class="btn btn-primario" id="abrir-confirmar">Open</button>
+          </footer>
+        </div>
+      </div>
+
+      <div class="modal-fundo" id="modal-mover" hidden>
+        <div class="modal modal-estreito" role="dialog" aria-modal="true" aria-labelledby="mover-titulo">
+          <h2 id="mover-titulo">Move to</h2>
+          <p class="dialogo-sub" id="mover-sub"></p>
+          <select id="mover-destino" aria-label="Destination folder"></select>
+          <div class="modal-pe">
+            <button class="btn btn-fantasma" data-fechar>Cancel</button>
+            <button class="btn btn-primario" id="mover-confirmar">Move</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-fundo" id="dialogo-fundo" hidden>
+        <div class="modal modal-estreito" role="dialog" aria-modal="true" aria-labelledby="dialogo-titulo">
+          <h2 id="dialogo-titulo">Rename</h2>
+          <p class="dialogo-sub" id="dialogo-sub"></p>
+          <input id="dialogo-campo" spellcheck="false" autocomplete="off" />
+          <div class="modal-pe">
+            <button class="btn btn-fantasma" id="dialogo-cancelar">Cancel</button>
+            <button class="btn btn-primario" id="dialogo-confirmar">Confirm</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="erro-boot" id="erro-boot" hidden>
+        <h2>The interface did not load</h2>
+        <p>The <code>app.js</code> bundle stopped midway. Run <code>npm run build</code> in <code>assets/ui</code>.</p>
+        <pre></pre>
+      </div>
+    </div>
+
+    <script>
+      window.__luariaErros = [];
+      window.addEventListener("error", (e) => window.__luariaErros.push(e.message || String(e.error)));
+      window.addEventListener("unhandledrejection", (e) =>
+        window.__luariaErros.push(String((e.reason && e.reason.message) || e.reason)),
+      );
+      setTimeout(() => {
+        if (window.__luariaPronto) return;
+        const alvo = document.getElementById("erro-boot");
+        if (!alvo) return;
+        alvo.hidden = false;
+        alvo.querySelector("pre").textContent =
+          window.__luariaErros.join("\n") || "app.js did not finish starting (see the console)";
+      }, 2000);
+    </script>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

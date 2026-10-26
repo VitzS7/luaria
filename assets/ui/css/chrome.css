@@ -1,0 +1,314 @@
+/* Barra de título: menu à esquerda, navegação em pílula e controles da janela.
+   `data-nav` no body troca o layout da navegação (centro ou logo após o menu). */
+
+.barra {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  height: var(--altura-barra);
+  padding: 0 8px 0 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--borda) 70%, transparent);
+  background: color-mix(in srgb, var(--painel-solido) 82%, transparent);
+  -webkit-backdrop-filter: blur(var(--desfoque));
+  backdrop-filter: blur(var(--desfoque));
+  user-select: none;
+  cursor: default;
+}
+
+.barra-esq {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.marca {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.marca-nome {
+  font: 600 15px/1 var(--fonte-titulo);
+  letter-spacing: 0.01em;
+}
+
+.marca-versao {
+  font: 400 11px/1 var(--fonte-mono);
+  color: var(--texto-suave);
+  white-space: nowrap;
+}
+
+.nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid color-mix(in srgb, var(--borda) 85%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--superficie) 70%, transparent);
+  grid-column: 2;
+}
+
+.nav-marcador {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 0;
+  width: 0;
+  border-radius: 999px;
+  will-change: transform;
+  background: var(--painel-solido);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 0 0 1px color-mix(in srgb, var(--acento) 30%, transparent);
+  transition: transform 220ms var(--curva), width 220ms var(--curva);
+}
+
+.nav-item {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 30px;
+  padding: 0 14px 0 11px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--texto-suave);
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 160ms var(--curva);
+}
+
+.nav-item:hover {
+  color: var(--texto);
+}
+
+.nav-item.ativo {
+  color: var(--texto);
+}
+
+.nav-item .icone {
+  width: 15px;
+  height: 15px;
+}
+
+.barra-dir {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: 0;
+}
+
+.conexao {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 26px;
+  padding: 0 10px;
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--texto-suave);
+  font: 500 12px/1 var(--fonte-mono);
+  white-space: nowrap;
+}
+
+.conexao-ponto {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--texto-suave);
+  opacity: 0.6;
+}
+
+.conexao.on {
+  color: var(--texto);
+}
+
+.conexao.on .conexao-ponto {
+  background: var(--ok);
+  opacity: 1;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent);
+}
+
+.conexao.anexando .conexao-ponto {
+  background: var(--aviso);
+  opacity: 1;
+  animation: pulsar 900ms ease-in-out infinite;
+}
+
+.conexao.erro .conexao-ponto {
+  background: var(--erro);
+  opacity: 1;
+}
+
+@keyframes pulsar {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.janela-botoes {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.btn-janela {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--texto-suave);
+}
+
+.btn-janela .icone {
+  width: 14px;
+  height: 14px;
+}
+
+.btn-janela:hover {
+  background: var(--acento-suave);
+  color: var(--texto);
+}
+
+.btn-janela.fechar:hover {
+  background: var(--erro);
+  color: #1a0908;
+}
+
+.barra-progresso {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+.barra-progresso span {
+  position: absolute;
+  inset: 0;
+  width: 0;
+  background: var(--acento);
+  opacity: 0;
+}
+
+.barra-progresso.ativo span {
+  opacity: 1;
+  width: 40%;
+  animation: correr 1.2s ease-in-out infinite;
+}
+
+@keyframes correr {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(260%);
+  }
+}
+
+/* ------------------------ layouts da barra ------------------------ */
+
+body[data-nav="esquerda"] .barra {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+body[data-nav="esquerda"] .nav {
+  grid-column: 2;
+  justify-self: start;
+  margin-left: 12px;
+}
+
+/* Abaixo de 760 px o texto dos itens some e fica só o ícone. */
+@media (max-width: 760px) {
+  .nav-item {
+    gap: 0;
+    padding: 0 12px;
+  }
+  .nav-item .txt {
+    display: none;
+  }
+  .marca-versao {
+    display: none;
+  }
+  .conexao-texto {
+    display: none;
+  }
+}
+
+/* Alças de redimensionamento: janela sem decoração do GTK não tem borda para pegar.
+   As bordas ficam finas para não tapar os botões da barra; os cantos são maiores. */
+.alca {
+  position: fixed;
+  z-index: 60;
+}
+
+.alca[data-borda="n"],
+.alca[data-borda="s"] {
+  left: 10px;
+  right: 10px;
+  height: 5px;
+  cursor: ns-resize;
+}
+
+.alca[data-borda="n"] {
+  top: 0;
+}
+
+.alca[data-borda="s"] {
+  bottom: 0;
+}
+
+.alca[data-borda="l"],
+.alca[data-borda="o"] {
+  top: 10px;
+  bottom: 10px;
+  width: 5px;
+  cursor: ew-resize;
+}
+
+.alca[data-borda="l"] {
+  right: 0;
+}
+
+.alca[data-borda="o"] {
+  left: 0;
+}
+
+.alca.canto {
+  width: 12px;
+  height: 12px;
+}
+
+.alca[data-borda="no"] {
+  top: 0;
+  left: 0;
+  cursor: nwse-resize;
+}
+
+.alca[data-borda="se"] {
+  right: 0;
+  bottom: 0;
+  cursor: nwse-resize;
+}
+
+.alca[data-borda="ne"] {
+  top: 0;
+  right: 0;
+  cursor: nesw-resize;
+}
+
+.alca[data-borda="so"] {
+  bottom: 0;
+  left: 0;
+  cursor: nesw-resize;
+}

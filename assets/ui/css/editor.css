@@ -1,0 +1,856 @@
+/* Editor: abas, CodeMirror no centro, console (Output/Problemas) embaixo e a
+   árvore de arquivos à direita. A coluna da direita encolhe com a janela. */
+
+.editor-vista {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(180px, 21vw, 260px);
+  gap: 12px;
+  height: 100%;
+  min-height: 0;
+}
+
+.editor-principal {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) var(--altura-console) auto;
+  gap: 10px;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* --------------------------- abas --------------------------- */
+
+.abas-barra {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.abas {
+  display: flex;
+  flex: 1;
+  gap: 4px;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.abas::-webkit-scrollbar {
+  display: none;
+}
+
+.aba {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 7px;
+  height: 30px;
+  max-width: 220px;
+  padding: 0 6px 0 10px;
+  border: 1px solid transparent;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--texto-suave);
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.aba .icone {
+  width: 13px;
+  height: 13px;
+  opacity: 0.8;
+}
+
+.aba:hover {
+  color: var(--texto);
+  background: var(--acento-suave);
+}
+
+.aba.ativa {
+  border-color: color-mix(in srgb, var(--borda) 90%, transparent);
+  background: var(--painel-solido);
+  color: var(--texto);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.aba.ativa .icone {
+  color: var(--acento);
+  opacity: 1;
+}
+
+.aba.fixada {
+  padding-right: 10px;
+}
+
+.aba-nome {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.aba-fechar {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--texto-suave);
+}
+
+.aba-fechar .icone {
+  width: 11px;
+  height: 11px;
+  opacity: 1;
+}
+
+.aba-fechar:hover {
+  background: color-mix(in srgb, var(--texto) 12%, transparent);
+  color: var(--texto);
+}
+
+.aba-ponto {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--acento);
+}
+
+/* ------------------------ área do editor ------------------------ */
+
+.area-editor {
+  position: relative;
+  min-height: 0;
+  border: 1px solid color-mix(in srgb, var(--borda) 80%, transparent);
+  border-radius: var(--raio-lg);
+  background: var(--editor-fundo, var(--painel));
+  overflow: hidden;
+}
+
+.editor {
+  position: absolute;
+  inset: 0;
+}
+
+.editor-vazio {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: none;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 24px;
+  text-align: center;
+  background: var(--painel);
+}
+
+.editor-vazio.visivel {
+  display: grid;
+}
+
+.editor-vazio h2 {
+  font-size: 18px;
+}
+
+.editor-vazio p {
+  color: var(--texto-suave);
+  margin-bottom: 8px;
+}
+
+.cm-marca {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 6px 0 0 4px;
+  border-radius: 50%;
+}
+
+.cm-marca.erro {
+  background: var(--erro);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--erro) 20%, transparent);
+}
+
+.cm-marca.warn {
+  background: var(--aviso);
+}
+
+/* --------------------------- console --------------------------- */
+
+.console {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border: 1px solid color-mix(in srgb, var(--borda) 80%, transparent);
+  border-radius: var(--raio-lg);
+  background: var(--painel);
+  overflow: hidden;
+}
+
+.console-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 36px;
+  padding: 0 6px 0 4px;
+  border-bottom: 1px solid color-mix(in srgb, var(--borda) 70%, transparent);
+}
+
+.console-abas {
+  display: flex;
+  gap: 2px;
+}
+
+.aba-console {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--texto-suave);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.aba-console .icone {
+  width: 13px;
+  height: 13px;
+}
+
+.aba-console.ativo {
+  background: var(--acento-suave);
+  color: var(--texto);
+}
+
+.console-acoes {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.console-corpo {
+  flex: 1;
+  min-height: 0;
+  padding: 6px 4px;
+  overflow: auto;
+  contain: layout paint;
+  font: 400 12px/1.6 var(--fonte-mono);
+}
+
+.log-linha {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  gap: 6px;
+  padding: 0 8px;
+  border-radius: 4px;
+  color: var(--texto);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 20px;
+}
+
+.log-linha:hover {
+  background: color-mix(in srgb, var(--texto) 4%, transparent);
+}
+
+.log-linha.info {
+  color: var(--texto-suave);
+}
+
+.log-linha.warn {
+  color: var(--aviso);
+}
+
+.log-linha.erro {
+  color: var(--erro);
+}
+
+.log-linha.clicavel {
+  cursor: pointer;
+}
+
+.log-prefixo {
+  color: var(--texto-suave);
+  text-align: center;
+}
+
+.log-texto {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.log-seq {
+  color: var(--texto-suave);
+  font-size: 11px;
+}
+
+/* Placeholder do corpo do console: fica abaixo da barra, sem cobrir Output/Problemas. */
+.console-vazio {
+  position: absolute;
+  top: 37px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  pointer-events: none;
+  color: var(--texto-suave);
+  font-size: 12px;
+}
+
+.console {
+  position: relative;
+}
+
+.problemas {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 6px;
+}
+
+.problemas[hidden] {
+  display: none;
+}
+
+.problema {
+  display: grid;
+  grid-template-columns: 8px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 56px;
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  text-align: left;
+  font-size: 13px;
+}
+
+.problema:hover {
+  background: var(--acento-suave);
+}
+
+.problema-marca {
+  width: 7px;
+  height: 7px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--erro);
+}
+
+.problema.warn .problema-marca {
+  background: var(--aviso);
+}
+
+.problema-arquivo {
+  display: block;
+  margin-top: 2px;
+  color: var(--texto-suave);
+  font: 400 11px var(--fonte-mono);
+}
+
+.problema-linha {
+  color: var(--texto-suave);
+  font: 500 12px var(--fonte-mono);
+}
+
+.problemas-vazio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 28px 12px;
+  color: var(--texto-suave);
+  font-size: 13px;
+}
+
+.problemas-vazio .icone {
+  color: var(--ok);
+}
+
+/* ------------------------ ações do editor ------------------------ */
+
+.editor-acoes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* -------------------------- painel de arquivos -------------------------- */
+
+.arquivos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  min-height: 0;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--borda) 80%, transparent);
+  border-radius: var(--raio-lg);
+  background: var(--painel);
+}
+
+.arquivos-aba {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: var(--raio-sm);
+  background: var(--painel-solido);
+  color: var(--texto);
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow: inset 0 0 0 1px var(--borda);
+}
+
+.arquivos-aba .icone {
+  width: 13px;
+  height: 13px;
+  color: var(--acento);
+}
+
+.arvore {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.arvore-pasta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.arvore-pasta .icone {
+  color: var(--acento);
+}
+
+.arvore-pasta .contagem {
+  margin-left: auto;
+}
+
+.arvore-itens {
+  margin: 2px 0 0 10px;
+  padding: 0 0 0 8px;
+  list-style: none;
+  border-left: 1px solid color-mix(in srgb, var(--borda) 80%, transparent);
+}
+
+.arquivo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 28px;
+  padding: 4px 8px;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 28px;
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--texto-suave);
+  font-size: 13px;
+  text-align: left;
+}
+
+.arquivo .icone {
+  width: 14px;
+  height: 14px;
+}
+
+.arquivo:hover {
+  background: var(--acento-suave);
+  color: var(--texto);
+}
+
+.arquivo.ativo {
+  background: var(--painel-solido);
+  color: var(--texto);
+  box-shadow: inset 0 0 0 1px var(--borda);
+}
+
+.arquivo-nome {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.arquivos-pe {
+  position: relative;
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--borda) 70%, transparent);
+}
+
+.arquivos-pe .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ------------------------ popover de clientes ------------------------ */
+
+/* Abre para cima, na largura do painel: o rodapé é o ponto de ancoragem. */
+.pop-clientes {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: grid;
+  gap: 8px;
+  max-height: 60vh;
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-lg);
+  background: var(--painel-solido);
+  box-shadow: var(--sombra);
+  animation: entrar 160ms var(--curva) backwards;
+}
+
+.pop-topo {
+  padding: 0 4px;
+}
+
+.clientes-todos,
+.cliente-alvo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--texto-suave);
+  font-size: 12px;
+}
+
+.clientes-todos {
+  padding: 2px 6px 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--borda) 70%, transparent);
+}
+
+.clientes-todos input,
+.cliente-alvo input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--acento);
+}
+
+.cliente-lista {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cliente {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 4px 10px;
+  align-items: center;
+  padding: 8px;
+  border-radius: var(--raio-sm);
+}
+
+.cliente:hover {
+  background: var(--acento-suave);
+}
+
+.cliente[aria-current="true"] {
+  background: var(--acento-suave);
+  box-shadow: inset 2px 0 0 var(--acento);
+}
+
+.cliente-foto {
+  position: relative;
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--raio-sm);
+  background: var(--superficie);
+  color: var(--texto-suave);
+  overflow: hidden;
+}
+
+.cliente-foto .icone {
+  width: 18px;
+  height: 18px;
+}
+
+.cliente-foto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cliente-info {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cliente-titulo {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+
+.cliente-nome {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cliente-login {
+  flex: none;
+  color: var(--texto-suave);
+  font-size: 12px;
+}
+
+.cliente-dica,
+.cliente-meta {
+  color: var(--texto-suave);
+  font-size: 11px;
+}
+
+.cliente-meta {
+  overflow-wrap: anywhere;
+  font-family: var(--fonte-mono);
+}
+
+.cliente-situacao {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.cliente-status[data-status="anexado"] {
+  color: var(--ok);
+}
+
+.cliente-status[data-status="morto"] {
+  color: var(--erro);
+}
+
+.cliente-tag {
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--acento-suave);
+  color: var(--texto);
+  font-size: 11px;
+  line-height: 18px;
+}
+
+.cliente-acoes {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cliente-acao {
+  height: 28px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.cliente-esqueleto {
+  pointer-events: none;
+}
+
+.cliente-esqueleto .cliente-bloco {
+  grid-column: 2;
+  width: 70%;
+  height: 12px;
+  border-radius: var(--raio-sm);
+  background: var(--superficie);
+  animation: pulso-clientes 1.2s ease-in-out infinite alternate;
+}
+
+.cliente-esqueleto .cliente-foto {
+  animation: pulso-clientes 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes pulso-clientes {
+  from {
+    opacity: 0.45;
+  }
+}
+
+.clientes-aviso {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  padding: 8px 6px;
+  color: var(--texto-suave);
+  font-size: 12px;
+}
+
+.clientes-aviso p {
+  margin: 0;
+}
+
+/* Árvore: linhas são divs (role=treeitem) para aceitar o switch e o botão de ações dentro. */
+#lista-arquivos {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.no {
+  cursor: pointer;
+}
+
+.no:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: -2px;
+}
+
+.no.arvore-pasta:hover {
+  border-radius: var(--raio-sm);
+  background: var(--acento-suave);
+}
+
+.no-espaco {
+  flex: none;
+  width: 12px;
+}
+
+.chevron {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  color: var(--texto-suave);
+  transition: transform 120ms var(--curva);
+}
+
+.no[aria-expanded="false"] .chevron {
+  transform: rotate(-90deg);
+}
+
+.no-chave input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--acento);
+}
+
+.no-mais {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--texto-suave);
+  opacity: 0;
+  transition: opacity 120ms var(--curva);
+}
+
+.no-mais .icone {
+  width: 14px;
+  height: 14px;
+}
+
+.no-mais:hover {
+  background: var(--acento-suave);
+  color: var(--texto);
+}
+
+.no:hover .no-mais,
+.no:focus-visible .no-mais,
+.no-mais:focus-visible {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .no-mais {
+    opacity: 1;
+  }
+}
+
+.arvore-vazio,
+.arvore-estado {
+  padding: 8px 6px;
+  color: var(--texto-suave);
+  font-size: 12px;
+}
+
+.arvore-estado {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+}
+
+.arvore-estado p {
+  margin: 0;
+}
+
+.menu button.perigo {
+  color: var(--erro);
+}
+
+.campo-rotulo {
+  display: grid;
+  gap: 6px;
+  color: var(--texto-suave);
+  font-size: 13px;
+}
+
+.abrir-raizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.modal-pe .importar {
+  margin-right: auto;
+}
+
+/* Telas estreitas: o console ganha altura menor para o editor respirar. */
+@media (max-width: 900px) {
+  :root {
+    --altura-console: 150px;
+  }
+  .editor-vista {
+    grid-template-columns: minmax(0, 1fr) 170px;
+  }
+  .editor-acoes .btn {
+    padding: 0 9px;
+  }
+}
+
+/* Cor por aba: uma régua na base, sem mexer no fundo da aba ativa. */
+.aba.com-cor {
+  box-shadow: inset 0 -2px 0 var(--cor-aba);
+}

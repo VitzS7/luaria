@@ -1,0 +1,331 @@
+/* Biblioteca de scripts: cabeçalho com busca e filtros, grade de cartões com
+   trecho do código (não há miniatura inventada). */
+
+.vista-topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 16px;
+  padding: 4px 4px 16px;
+}
+
+.vista-titulo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vista-titulo h1 {
+  font-size: 22px;
+}
+
+.vista-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.vista-acoes .campo-busca {
+  width: min(300px, 40vw);
+}
+
+#btn-filtros {
+  position: relative;
+}
+
+#btn-filtros .badge {
+  margin-left: 2px;
+}
+
+.grade-scripts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  gap: 14px;
+  padding: 2px 2px 24px;
+}
+
+.grade-scripts[hidden] {
+  display: none;
+}
+
+.cartao {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--borda) 85%, transparent);
+  border-radius: var(--raio-lg);
+  background: var(--painel);
+  overflow: hidden;
+  cursor: pointer;
+  /* sem backdrop-filter: dezenas de cartões desfocando a cada hover/scroll era o maior custo */
+  contain: layout paint;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 210px;
+  transition: border-color 160ms var(--curva), transform 160ms var(--curva);
+}
+
+.cartao:hover,
+.cartao:focus-visible {
+  border-color: color-mix(in srgb, var(--acento) 45%, var(--borda));
+  transform: translateY(-2px);
+}
+
+.cartao-trecho {
+  height: 124px;
+  padding: 12px 14px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--borda) 60%, transparent);
+  background: color-mix(in srgb, var(--superficie) 70%, transparent);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent);
+}
+
+.cartao-trecho pre {
+  margin: 0;
+  font: 400 11.5px/1.55 var(--fonte-mono);
+  color: var(--texto-suave);
+  white-space: pre;
+}
+
+.cartao-corpo {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px 14px;
+}
+
+.cartao-nome {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 15px;
+}
+
+.cartao-meta {
+  color: var(--texto-suave);
+  font: 400 11.5px var(--fonte-mono);
+}
+
+.cartao-acoes {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--raio-sm);
+  background: color-mix(in srgb, var(--painel-solido) 85%, transparent);
+  opacity: 0;
+  transition: opacity 160ms var(--curva);
+}
+
+.cartao:hover .cartao-acoes,
+.cartao:focus-within .cartao-acoes {
+  opacity: 1;
+}
+
+/* No toque e em teclado a ação precisa estar sempre visível. */
+@media (hover: none) {
+  .cartao-acoes {
+    opacity: 1;
+  }
+}
+
+/* ------------------------------- Hub ------------------------------- */
+
+.segmentado .contagem {
+  margin-left: 4px;
+}
+
+#meus-corpo[hidden],
+#hub-corpo[hidden] {
+  display: none;
+}
+
+.hub-cartao {
+  contain-intrinsic-size: auto 268px;
+}
+
+/* Fundo e proporção reservados: a imagem entra por cima sem empurrar o texto. */
+.hub-img {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--superficie);
+  border-bottom: 1px solid color-mix(in srgb, var(--borda) 60%, transparent);
+  overflow: hidden;
+}
+
+.hub-img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 200ms var(--curva);
+}
+
+.hub-img img.pronta {
+  opacity: 1;
+}
+
+.hub-fonte,
+.hub-selo {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: var(--raio-sm);
+  font: 600 10.5px/1 var(--fonte-mono);
+  letter-spacing: 0.02em;
+}
+
+.hub-fonte {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  background: var(--painel-solido);
+  color: var(--texto);
+}
+
+.hub-cartao .hub-corpo-cartao {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px 12px;
+}
+
+.hub-titulo {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.6em;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.hub-jogo {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--texto-suave);
+  font-size: 12px;
+}
+
+.hub-rodape {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 18px;
+  color: var(--texto-suave);
+  font: 400 11.5px var(--fonte-mono);
+}
+
+.hub-rodape .hub-curtidas {
+  margin-right: auto;
+}
+
+.hub-selo.key {
+  background: var(--aviso);
+  color: #1d1604;
+}
+
+.hub-selo.paid {
+  background: #e8883a;
+  color: #1d0f03;
+}
+
+.hub-selo.ok {
+  background: var(--acento-suave);
+  color: var(--texto);
+}
+
+.hub-esqueleto {
+  pointer-events: none;
+}
+
+.hub-esqueleto .hub-bloco {
+  height: 12px;
+  border-radius: var(--raio-sm);
+  background: var(--superficie);
+  animation: hub-pulso 1.2s ease-in-out infinite alternate;
+}
+
+.hub-esqueleto .hub-img {
+  animation: hub-pulso 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes hub-pulso {
+  from {
+    opacity: 0.55;
+  }
+}
+
+.hub-mais {
+  display: grid;
+  place-items: center;
+  padding: 4px 0 28px;
+}
+
+.hub-mais[hidden] {
+  display: none;
+}
+
+.modal-largo {
+  width: min(560px, 100%);
+}
+
+.hub-det-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  color: var(--texto-suave);
+  font-size: 12.5px;
+}
+
+.hub-det-desc {
+  color: var(--texto);
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.hub-det-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hub-det-lista li {
+  padding: 3px 9px;
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+  color: var(--texto-suave);
+  font-size: 12px;
+}
+
+.hub-det-rotulo {
+  margin-bottom: 6px;
+  color: var(--texto-suave);
+  font: 600 11px var(--fonte-mono);
+  text-transform: uppercase;
+}
+
+#hub-det-variante {
+  margin-right: auto;
+  max-width: 160px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hub-esqueleto .hub-bloco,
+  .hub-esqueleto .hub-img {
+    animation: none;
+  }
+}

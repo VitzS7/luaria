@@ -1,0 +1,278 @@
+/* Home: mapa de atividade em largura total e, embaixo, recentes e changelog. */
+
+.home {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 16px;
+  min-height: 100%;
+}
+
+.atividade {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+}
+
+.atividade-corpo {
+  position: relative;
+  padding: 4px 16px 6px;
+  min-height: 150px;
+}
+
+.atividade-corpo[data-vazio="sim"] .heat {
+  opacity: 0.35;
+}
+
+/* Aviso em linha própria, acima da grade: não pode cobrir os meses nem as células. */
+.atividade-vazio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 6px 0 12px;
+}
+
+.atividade-vazio p {
+  font-weight: 600;
+}
+
+.atividade-vazio span {
+  color: var(--texto-suave);
+  font-size: 13px;
+}
+
+.atividade-resumo {
+  display: flex;
+  gap: 22px;
+  padding: 10px 16px 14px;
+  border-top: 1px solid color-mix(in srgb, var(--borda) 70%, transparent);
+  color: var(--texto-suave);
+  font-size: 12px;
+}
+
+.atividade-resumo strong {
+  color: var(--texto);
+  font: 600 13px var(--fonte-mono);
+  margin-right: 4px;
+}
+
+/* -------------------- grade diária (heatmap) -------------------- */
+
+.heat {
+  --colunas: 53;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  overflow-x: auto;
+}
+
+.meses {
+  display: grid;
+  grid-template-columns: repeat(var(--colunas), minmax(0, 1fr));
+  font: 400 11px/1 var(--fonte-ui);
+  color: var(--texto-suave);
+}
+
+.meses span {
+  white-space: nowrap;
+}
+
+.celulas {
+  display: grid;
+  grid-template-columns: repeat(var(--colunas), minmax(0, 1fr));
+  grid-template-rows: repeat(7, 1fr);
+  grid-auto-flow: column;
+  gap: 3px;
+  height: 104px;
+}
+
+.celula {
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--texto) 6%, transparent);
+  transition: transform 120ms ease;
+}
+
+.celula.futuro {
+  background: transparent;
+}
+
+.celula.nivel-1 {
+  background: color-mix(in srgb, var(--acento) 25%, transparent);
+}
+.celula.nivel-2 {
+  background: color-mix(in srgb, var(--acento) 45%, transparent);
+}
+.celula.nivel-3 {
+  background: color-mix(in srgb, var(--acento) 70%, transparent);
+}
+.celula.nivel-4 {
+  background: var(--acento);
+}
+
+.celula:not(.futuro):hover {
+  transform: scale(1.25);
+}
+
+/* ------------------------- semanal e acumulado ------------------------- */
+
+.semanal {
+  display: grid;
+  gap: 6px;
+}
+
+.semanas {
+  display: grid;
+  grid-template-columns: repeat(53, minmax(0, 1fr));
+  align-items: end;
+  gap: 3px;
+  height: 120px;
+}
+
+.semana-barra {
+  min-height: 2px;
+  border-radius: 3px 3px 1px 1px;
+  background: var(--acento);
+  opacity: 0.85;
+}
+
+.acumulado {
+  display: block;
+  width: 100%;
+  height: 130px;
+}
+
+.acumulado .area {
+  fill: var(--acento-suave);
+}
+
+.acumulado .traco {
+  fill: none;
+  stroke: var(--acento);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.acumulado-rotulo {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  color: var(--texto-suave);
+  font: 400 11px var(--fonte-mono);
+}
+
+/* ------------------------ recentes e changelog ------------------------ */
+
+.recentes,
+.changelog {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.lista-recentes {
+  margin: 0;
+  padding: 0 8px 10px;
+  list-style: none;
+}
+
+.recente {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "icone nome quando" "icone meta meta";
+  align-items: center;
+  column-gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  text-align: left;
+}
+
+.recente:hover {
+  background: var(--acento-suave);
+}
+
+.recente .icone {
+  grid-area: icone;
+  color: var(--texto-suave);
+}
+
+.recente-nome {
+  grid-area: nome;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.recente-meta {
+  grid-area: meta;
+  color: var(--texto-suave);
+  font-size: 12px;
+}
+
+.recente-quando {
+  grid-area: quando;
+  color: var(--texto-suave);
+  font: 400 12px var(--fonte-mono);
+}
+
+.changelog-corpo {
+  display: grid;
+  gap: 2px;
+  padding: 0 16px 14px;
+  overflow: auto;
+}
+
+.versao {
+  padding: 10px 0;
+  border-top: 1px solid color-mix(in srgb, var(--borda) 70%, transparent);
+}
+
+.versao:first-child {
+  border-top: 0;
+}
+
+.versao header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.versao header strong {
+  font: 600 16px var(--fonte-titulo);
+}
+
+.versao time {
+  color: var(--texto-suave);
+  font: 400 12px var(--fonte-mono);
+}
+
+.versao ul {
+  margin: 6px 0 0;
+  padding-left: 16px;
+  color: var(--texto-suave);
+  font-size: 13px;
+}
+
+.selo-ultimo {
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--acento);
+  color: var(--acento-texto);
+  font: 600 10px/16px var(--fonte-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Telas estreitas: os dois painéis de baixo empilham. */
+@media (max-width: 900px) {
+  .home {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .atividade {
+    grid-column: auto;
+  }
+}

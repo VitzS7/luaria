@@ -1,0 +1,33 @@
+// Estado compartilhado da interface. Os módulos leem e escrevem aqui; o que
+// precisa sobreviver a um reinício vai para o ui.json pelo módulo `tema`.
+
+export const estado = {
+  vista: "home",
+  versao: "",
+  tema: null,
+  status: null,
+  clientes: null,
+  scripts: [],
+  arvore: [],
+  expandidas: new Set(["Scripts"]),
+  abas: [],
+  ativa: null,
+  problemas: [],
+  arquivoExecucao: null,
+  linhas: [],
+  ultimoSeq: 0,
+  filtroRuido: true,
+  autoScroll: true,
+  painel: "output",
+  executando: false,
+  autoexecEmCurso: false,
+  autoexecPular: false,
+  ultimoPidConectado: null,
+  ordem: "recentes",
+  mostrar: "todos",
+  busca: "",
+  buscaScripts: "",
+  atividade: {},
+  atividadeModo: "diario",
+  secao: "interface",
+};

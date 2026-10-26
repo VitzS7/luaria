@@ -1,0 +1,53 @@
+name: Bug report
+description: Something that should work but does not
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening: check [docs/limitations.md](../../docs/limitations.md). Security vulnerabilities do not go here: see SECURITY.md. (Português: confira `docs/pt-BR/limitations.md` antes de abrir.)
+  - type: input
+    id: client_version
+    attributes:
+      label: Roblox client and Mocktail version
+      description: Payload version (`current.json` in Mocktail) and Mocktail version, if you know them.
+    validations:
+      required: true
+  - type: input
+    id: luaria_version
+    attributes:
+      label: Luaria commit or version
+      placeholder: "e.g. abc1234"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. tools/launch.sh <PlaceId>
+        2. luaria-cli exec script.lua
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected_actual
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Log output
+      description: Excerpts from the client log containing `LUARIA_` or `FLog::CreatorOutput`. Remove tokens and personal paths.
+      render: text
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmations
+      options:
+        - label: I confirmed the client was inside an experience (not on the menu)
+          required: true
+        - label: I am not asking for help bypassing anti-cheat or attacking other players
+          required: true

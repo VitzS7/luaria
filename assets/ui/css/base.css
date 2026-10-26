@@ -1,0 +1,577 @@
+/* Base: fontes self-hosted, tokens e primitivas (botão, campo, chip, modal).
+   Cores vêm de variáveis que o tema.js define no :root; os valores aqui são
+   só o que aparece antes do primeiro boot. */
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("/fontes/ibm-plex-sans-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("/fontes/ibm-plex-sans-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/fontes/space-grotesk-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fontes/ibm-plex-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --janela: #1a2130;
+  --painel: rgba(42, 49, 66, 0.7);
+  --painel-solido: #2a3142;
+  --superficie: #363e52;
+  --texto: #eef3f9;
+  --texto-suave: #aeb9c9;
+  --borda: #4b5670;
+  --acento: #8cc4d4;
+  --acento-suave: rgba(140, 196, 212, 0.16);
+  --acento-texto: #0b0e12;
+  --raio: 12px;
+  --desfoque: 14px;
+  --fonte-ui: "IBM Plex Sans", system-ui, sans-serif;
+  --fonte-titulo: "Space Grotesk", "IBM Plex Sans", system-ui, sans-serif;
+  --fonte-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --fonte-editor: 13px;
+  --ok: #7bd389;
+  --erro: #ff7b72;
+  --aviso: #e7b75f;
+  --fundo-imagem: none;
+  --fundo-desfoque: 4px;
+  --fundo-forca: 0.3;
+  --sombra: 0 18px 48px rgba(0, 0, 0, 0.35);
+  --altura-barra: 52px;
+  --altura-console: 196px;
+  color-scheme: dark;
+}
+
+body {
+  --raio-sm: calc(var(--raio) * 0.5);
+  --raio-md: calc(var(--raio) * 0.7);
+  --raio-lg: var(--raio);
+  --raio-xl: calc(var(--raio) * 1.4);
+  --curva: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Sem isso, `display` de classe (grid, flex) vence o atributo hidden. */
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Janela transparente do luaria (ui_web.rs): o recorte no html pega também o que
+   é position: fixed (modais), coisa que o overflow do body não corta. */
+html.cantos {
+  background: transparent;
+  clip-path: inset(0 round var(--raio-janela, 12px));
+}
+
+html.cantos.maximizada {
+  clip-path: none;
+}
+
+body {
+  background: var(--janela);
+  color: var(--texto);
+  font: 400 14px/1.45 var(--fonte-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
+
+code,
+pre,
+kbd,
+.mono {
+  font-family: var(--fonte-mono);
+}
+
+kbd {
+  display: inline-block;
+  min-width: 20px;
+  padding: 1px 6px;
+  border: 1px solid var(--borda);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  font-size: 11px;
+  text-align: center;
+  color: var(--texto-suave);
+}
+
+.sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.icone {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icone-grande {
+  width: 40px;
+  height: 40px;
+  fill: none;
+  stroke: var(--texto-suave);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rotulo {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+.contagem {
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--superficie);
+  color: var(--texto-suave);
+  font: 500 11px/20px var(--fonte-mono);
+  text-align: center;
+}
+
+.badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--acento);
+  color: var(--acento-texto);
+  font: 600 11px/1 var(--fonte-mono);
+}
+
+.badge.quente {
+  background: var(--erro);
+  color: #1a0908;
+}
+
+/* ---------------------------- botões ---------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-md);
+  background: var(--superficie);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 140ms var(--curva), border-color 140ms var(--curva), transform 100ms var(--curva);
+}
+
+.btn:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--acento) 45%, var(--borda));
+  background: color-mix(in srgb, var(--superficie) 80%, var(--acento) 20%);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn-primario {
+  border-color: transparent;
+  background: var(--acento);
+  color: var(--acento-texto);
+}
+
+.btn-primario:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--acento) 88%, white);
+}
+
+.btn-fantasma {
+  border-color: transparent;
+  background: transparent;
+  color: var(--texto-suave);
+}
+
+.btn-fantasma:hover:not(:disabled) {
+  background: var(--acento-suave);
+  color: var(--texto);
+}
+
+.btn-perigo {
+  border-color: transparent;
+  background: var(--erro);
+  color: #1a0908;
+}
+
+.btn-icone {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--texto-suave);
+  transition: background-color 140ms var(--curva), color 140ms var(--curva);
+}
+
+.btn-icone:hover {
+  background: var(--acento-suave);
+  color: var(--texto);
+}
+
+.btn-icone.perigo:hover {
+  color: var(--erro);
+}
+
+.btn-icone.girando .icone,
+.btn.girando .icone {
+  animation: girar 900ms linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.chip {
+  height: 22px;
+  padding: 0 8px;
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--texto-suave);
+  font-size: 11px;
+}
+
+.chip.ativo {
+  border-color: color-mix(in srgb, var(--acento) 50%, transparent);
+  background: var(--acento-suave);
+  color: var(--texto);
+}
+
+.segmentado {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-md);
+  background: var(--superficie);
+}
+
+.segmentado button {
+  height: 26px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--texto-suave);
+  font-size: 12px;
+}
+
+.segmentado button.ativo {
+  background: var(--painel-solido);
+  color: var(--texto);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------------------------- campos ---------------------------- */
+
+.campo-busca {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-md);
+  background: var(--superficie);
+  color: var(--texto-suave);
+}
+
+.campo-busca:focus-within {
+  border-color: color-mix(in srgb, var(--acento) 60%, transparent);
+  color: var(--texto);
+}
+
+.campo-busca input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 13px;
+}
+
+.campo-busca input::placeholder,
+input::placeholder {
+  color: var(--texto-suave);
+  opacity: 0.8;
+}
+
+/* :where zera a especificidade: `.campo-busca input` precisa vencer esta regra. */
+:where(input[type="text"], input:not([type]), input[type="url"], input[type="search"], select) {
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-md);
+  background: var(--superficie);
+  outline: 0;
+}
+
+input:focus,
+select:focus {
+  border-color: color-mix(in srgb, var(--acento) 60%, transparent);
+}
+
+.vazio-linha {
+  padding: 14px 4px;
+  color: var(--texto-suave);
+  font-size: 13px;
+}
+
+.estado-vazio {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 64px 24px;
+  text-align: center;
+  color: var(--texto-suave);
+}
+
+.estado-vazio h2 {
+  color: var(--texto);
+  font-size: 20px;
+}
+
+.estado-vazio code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--superficie);
+}
+
+/* ------------------------- janela e fundo ------------------------ */
+
+.fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--janela);
+}
+
+.fundo::before {
+  content: "";
+  position: absolute;
+  inset: -32px;
+  background-image: var(--fundo-imagem);
+  background-size: cover;
+  background-position: center;
+  filter: blur(var(--fundo-desfoque));
+  opacity: var(--fundo-forca);
+}
+
+.janela {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: var(--altura-barra) 2px minmax(0, 1fr);
+  height: 100vh;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.palco {
+  position: relative;
+  min-height: 0;
+  padding: 16px 16px 16px;
+}
+
+.vista {
+  display: none;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+}
+
+.vista.ativa {
+  display: block;
+}
+
+@keyframes entrar {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* ------------------------ painéis (vidro) ------------------------ */
+
+.painel {
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--borda) 80%, transparent);
+  border-radius: var(--raio-lg);
+  background: var(--painel);
+}
+
+.painel-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 10px;
+}
+
+.painel-topo h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+}
+
+.painel-topo h2 .icone {
+  color: var(--texto-suave);
+}
+
+/* -------------------------- toasts ------------------------------- */
+
+.toasts {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 60;
+  display: grid;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 360px;
+  padding: 10px 14px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-md);
+  background: var(--painel-solido);
+  box-shadow: var(--sombra);
+  font-size: 13px;
+  animation: entrar 180ms var(--curva) backwards;
+  transition: opacity 180ms var(--curva), transform 180ms var(--curva);
+}
+
+.toast.saindo {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+.toast.ok .icone {
+  color: var(--ok);
+}
+
+.toast.erro .icone {
+  color: var(--erro);
+}
+
+.erro-boot {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  padding: 24px;
+  background: var(--janela);
+}
+
+.erro-boot pre {
+  padding: 12px;
+  border-radius: var(--raio-lg);
+  background: var(--superficie);
+  white-space: pre-wrap;
+  color: var(--erro);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html[data-efeitos="off"] * {
+  backdrop-filter: none !important;
+  transition: none !important;
+  animation: none !important;
+  box-shadow: none !important;
+}
